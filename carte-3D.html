@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>carte en 3D</title>
+<!-- AJOUT -->
+
+<link href="assets/img/fav.png" rel="icon">
+  <link href="assets/img/fav.png" rel="fav">
+
+  <link rel="stylesheet" href="leaflet.css" />
+  <script src="leaflet.js"></script>
+  <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        padding-left: 0px;
+        background-image: url("assets/CO2.png");
+
+      }
+      
+    #map {
+      width: 1263px;
+      height: 600px;
+        background-image: url(http://subtlepatterns.com/patterns/noisy_net.png);
+    }
+    .info {
+        padding: 6px 8px;
+        font: 14px/16px Arial, Helvetica, sans-serif;
+        background: white;
+        background: rgba(255,255,255,0.8);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+    .info h4 {
+        margin: 0 0 5px;
+        color: #1411dd;
+    }
+  </style>
+      <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-responsive.css" >
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../../dist/css/dvf.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="../css/example.css" type="text/css" media="screen" />
+    <!-- ajout -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+ 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Montserrat:300,400,500,700" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+  <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/vendor/ionicons/css/ionicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+  <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
+  <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+
+
+<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" type="text/css" href="./Qgis2threejs.css">
+</head>
+<body>
+   <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container-fluid">
+
+      <div class="row justify-content-center">
+        <div class="col-xl-11 d-flex align-items-center">
+          <h1 class="logo mr-auto"><a href="index.html">AfricaClim</a></h1>
+          
+          <nav class="nav-menu d-none d-lg-block">
+        </nav>
+        </div>
+      </div>
+
+    </div>
+  </header>
+  <!-- End Header -->
+
+<!-- <div id='map'></div>
+
+<script type="text/javascript" src="naturel.geojson"></script>
+
+<script type="text/javascript">
+
+  var map = L.map('map').setView([33.976483, -6.870933], 4);
+
+
+L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'}).addTo(map);
+</script> -->
+<div id="webgl"></div>
+
+<!-- popup -->
+<div id="popup" style="display:none;">
+<div id="closebtn">&times;</div>
+<div id="popupbar"></div>
+<div id="popupbody">
+ <div id="popupcontent"></div>
+ <div id="pageinfo">
+  <h1>Current View URL</h1>
+  <div><input id="urlbox" type="text"></div>
+
+<!--   <h1>Usage</h1>
+  <div id="usage"></div>
+
+  <h1>About</h1>
+  <div id="about">This page was made with <a href="http://www.qgis.org/" target="_blank">QGIS</a> and <a href="https://github.com/minorua/Qgis2threejs" target="_blank">Qgis2threejs</a> plugin, 
+and uses the following library: -->
+  <ul>
+  <li>three.js <a href="http://threejs.org/" target="_blank">http://threejs.org/</a> <a href="./threejs/LICENSE" target="_blank" class="license">(LICENSE)</a></li>
+  <li>dat-gui <a href="https://code.google.com/p/dat-gui/" target="_blank">https://code.google.com/p/dat-gui/</a> <a href="./dat-gui/license.txt" target="_blank" class="license">(LICENSE)</a></li>
+  <li id="lib_proj4js" style="display: none;">Proj4js <a href="http://trac.osgeo.org/proj4js/" target="_blank">http://trac.osgeo.org/proj4js/</a> <a href="./proj4js/LICENSE.md" target="_blank" class="license">(LICENSE)</a></li>
+  </ul>
+  </div>
+ </div>
+</div></div>
+
+<!-- footer -->
+<div id="footer"></div>
+
+<script src="./threejs/three.min.js"></script>
+<script src="./Qgis2threejs.js"></script>
+<script src="./threejs/OrbitControls.js"></script>
+<script>
+var option = Q3D.Options;
+
+</script>
+<script src="./carte3D.js"></script>
+<script>
+if (typeof proj4 !== "undefined") document.getElementById("lib_proj4js").style.display = "list-item";
+
+var container = document.getElementById("webgl");
+// initialize application
+var app = Q3D.application;
+app.init(container);
+
+// load the project
+app.loadProject(project);
+
+app.addEventListeners();
+app.start();
+
+</script>
+<script src="./dat-gui/dat.gui.min.js"></script>
+<script src="./dat-gui_panel.js"></script>
+<script>
+// initialize dat-gui panel
+Q3D.gui.init();
+</script>
+</body>
+</html>
