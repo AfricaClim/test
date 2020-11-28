@@ -3,7 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>Carte dynamique</title>
-	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
+	if (window.location.protocol.indexOf('https') == 0){
+  var el = document.createElement('meta')
+  el.setAttribute('http-equiv', 'Content-Security-Policy')
+  el.setAttribute('content', 'upgrade-insecure-requests')
+  document.head.append(el)
+} 
       <link href="../../../assets/img/fav.png" rel="icon">
   <link href="../../../assets/img/fav.png" rel="fav">
 
